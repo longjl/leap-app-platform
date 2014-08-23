@@ -1,0 +1,6 @@
+[submodule "SlidingMenuLibrary"]
+	path = SlidingMenuLibrary
+	url = https://github.com/longjl/library.git
+[submodule "actionbarsherlock"]
+	path = actionbarsherlock
+	url = https://github.com/longjl/abs.git
