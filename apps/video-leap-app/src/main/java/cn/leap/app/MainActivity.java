@@ -1,18 +1,42 @@
 package cn.leap.app;
 
-import android.app.Activity;
+import android.content.IntentFilter;
 import android.os.Bundle;
+
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+
+import cn.leap.app.fragments.HomeFragment;
+import cn.leap.app.fragments.LeftMenuFragment;
 
 /**
  * Created by longjianlin on 14-8-23.
  */
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
+
+    public MainActivity() {
+        super(R.string.main_title);
+    }
 
     @Override
-    public void onCreate(Bundle bundle) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.content_frame);
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HomeFragment(this,getSlidingMenu())).commit();
 
-        super.onCreate(bundle);
+        //open listener
+        getSlidingMenu().setOnOpenListener(new SlidingMenu.OnOpenListener() {
+            @Override
+            public void onOpen() {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            }
+        });
 
-        setContentView(R.layout.main);
+        //closed listener
+        getSlidingMenu().setOnClosedListener(new SlidingMenu.OnClosedListener() {
+            @Override
+            public void onClosed() {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+        });
     }
 }

@@ -2,17 +2,17 @@
 <pre-dex-items>
 
     <item
-        dex="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/pre-dexed/debug/classes-dabb6c94415193e5c458501fe3f3f5961c267fea.jar"
-        jar="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/exploded-aar/leap-app-platform.deps/actionbarsherlock/unspecified/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="9876489d7c0fc7c6b3cf61b74ccfe32adad49f86"/>
-    <item
         dex="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/pre-dexed/debug/classes-5ccf445e605383ed4b9ed15471b324d64107891e.jar"
         jar="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+    <item
+        dex="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/pre-dexed/debug/classes-dabb6c94415193e5c458501fe3f3f5961c267fea.jar"
+        jar="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/exploded-aar/leap-app-platform.deps/actionbarsherlock/unspecified/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="f4fce1860778892c3541b5861bab2d2faa5d95d9"/>
     <item
         dex="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-94b8060b51a43e1f974f2429c1668d7e7a9a1ac4.jar"
         jar="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
@@ -24,7 +24,7 @@
         jar="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/exploded-aar/leap-app-platform.deps/SlidingMenuLibrary/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="d809a73633a7a0ce040ed4cbe12baa900527384e"/>
+        sha1="90d2a1ff2500a4ec7f9da5e32bc7d36778e71f8c"/>
     <item
         dex="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-57b77bd3a4b557e5e19be4175280133054f5131a.jar"
         jar="/Users/longjianlin/Documents/tools/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/deps/SlidingMenuLibrary/SlidingMenuLibrary.iml" filepath="$PROJECT_DIR$/deps/SlidingMenuLibrary/SlidingMenuLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/deps/actionbarsherlock/actionbarsherlock.iml" filepath="$PROJECT_DIR$/deps/actionbarsherlock/actionbarsherlock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/leap-app-platform.iml" filepath="$PROJECT_DIR$/leap-app-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/apps/video-leap-app/video-leap-app.iml" filepath="$PROJECT_DIR$/apps/video-leap-app/video-leap-app.iml" />
+    </modules>
+  </component>
+</project>
+

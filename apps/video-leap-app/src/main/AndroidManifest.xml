@@ -18,4 +18,5 @@
         </activity>
     </application>
 
+    <uses-sdk android:maxSdkVersion="11" android:targetSdkVersion="17"/>
 </manifest>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:minHeight="100dp"
+                android:background="@drawable/home_lv_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+        >
+    <RelativeLayout android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/rl_id"
+            >
+        <ImageView
+                android:layout_width="140dp"
+                android:layout_height="80dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/home_03"
+                android:id="@+id/iv_thumb"
+                />
+        <TextView
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/tv_update_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/actionbar_background_color"
+                android:textColor="@color/white"
+                android:padding="2dp"
+                android:text="更新至22集"/>
+    </RelativeLayout>
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_toRightOf="@+id/rl_id"
+                  android:orientation="vertical"
+                  android:layout_marginLeft="5dp"
+                  android:layout_marginTop="10dp"
+            >
+        <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="告诉你怎么突破瓶颈"
+                android:textSize="@dimen/size_18"
+                />
+        <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="The only reliable way I've found so far is reloading the project..."
+                android:textSize="@dimen/size_14"
+                android:textColor="@color/grey50"
+                />
+    </LinearLayout>
+</RelativeLayout>

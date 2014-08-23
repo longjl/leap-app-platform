@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">leap-app-platform</string>
+    <string name="main_title"></string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
