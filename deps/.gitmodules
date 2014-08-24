@@ -4,3 +4,6 @@
 [submodule "actionbarsherlock"]
 	path = actionbarsherlock
 	url = https://github.com/longjl/abs.git
+[submodule "PopupMenuCompatLibrary"]
+	path = PopupMenuCompatLibrary
+	url = https://github.com/longjl/PopupMenuCompatLibrary.git

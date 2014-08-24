@@ -1,3 +1,5 @@
 include 'apps:video-leap-app'
 include 'deps:SlidingMenuLibrary'
 include 'deps:actionbarsherlock'
+include 'deps:PopupMenuCompatLibrary'
+

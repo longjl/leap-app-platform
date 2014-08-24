@@ -82,6 +82,7 @@
     <orderEntry type="library" exported="" name="support-annotations-20.0.0" level="project" />
     <orderEntry type="module" module-name="actionbarsherlock" exported="" />
     <orderEntry type="module" module-name="SlidingMenuLibrary" exported="" />
+    <orderEntry type="module" module-name="PopupMenuCompatLibrary" exported="" />
   </component>
 </module>
 

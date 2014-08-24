@@ -31,6 +31,7 @@ dependencies {
 
     compile(
             project(':deps:SlidingMenuLibrary'),
-            project(':deps:actionbarsherlock')
+            project(':deps:actionbarsherlock'),
+            project(':deps:PopupMenuCompatLibrary')
     )
 }
