@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:drawable="@color/home_new_hot_bgcolor"></item>
+    <item android:drawable="@color/lv_color" android:state_pressed="true"></item>
     <item android:drawable="@color/white"></item>
 </selector>

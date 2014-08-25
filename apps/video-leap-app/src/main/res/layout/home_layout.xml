@@ -50,7 +50,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="课程"
+                android:text="@string/course"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/size_19" />
         </RelativeLayout>
@@ -58,21 +58,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:background="@color/white">
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/gainsboro" />
 
-            <ListView
-                android:id="@+id/lv_new"
+            <com.handmark.pulltorefresh.library.PullToRefreshListView
+                android:id="@+id/pull_refresh_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:cacheColorHint="#00000000"
                 android:divider="@color/divider_color"
                 android:dividerHeight="1dp"
-                android:fastScrollEnabled="true"></ListView>
+                android:fadingEdge="none"
+                android:fastScrollEnabled="false"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false"
+                android:smoothScrollbar="true" />
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -2,11 +2,35 @@
 <pre-dex-items>
 
     <item
+        dex="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/pre-dexed/debug/classes-a3c92e0232ece2d3c81c4e9c2de95960bd58128d.jar"
+        jar="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/exploded-aar/leap-app-platform.deps/PopupMenuCompatLibrary/unspecified/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="60ba813f5457eb65a92ce38810c5a36ea585f26f"/>
+    <item
+        dex="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/pre-dexed/debug/library-1.0.6-f256de908f2973c999056aa03623fd85909ab1b3.jar"
+        jar="/Users/longjianlin/.gradle/caches/modules-2/files-2.1/com.mcxiaoke.volley/library/1.0.6/b2e6988baeea1aed656995f973aaa2fc3feaf447/library-1.0.6.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="b2e6988baeea1aed656995f973aaa2fc3feaf447"/>
+    <item
         dex="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/pre-dexed/debug/classes-5ccf445e605383ed4b9ed15471b324d64107891e.jar"
         jar="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+    <item
+        dex="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/pre-dexed/debug/classes-e210d8affb2acb13918a039c4cf601250b1cca51.jar"
+        jar="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/exploded-aar/leap-app-platform.deps/PullToRefreshLibrary/unspecified/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="6561d0c43fc625c087bb0140ef15d573e98caf12"/>
+    <item
+        dex="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/pre-dexed/debug/universal-image-loader-1.9.2-527d3b9fb285488ef3d41a38f032ebbe59ea113a.jar"
+        jar="/Users/longjianlin/.gradle/caches/modules-2/files-2.1/com.nostra13.universalimageloader/universal-image-loader/1.9.2/9e025bc5b84968e7d6ac765e660a70b3e5a87432/universal-image-loader-1.9.2.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="9e025bc5b84968e7d6ac765e660a70b3e5a87432"/>
     <item
         dex="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/pre-dexed/debug/classes-dabb6c94415193e5c458501fe3f3f5961c267fea.jar"
         jar="/Users/longjianlin/Documents/leap-android-work/leap-app-platform/apps/video-leap-app/build/intermediates/exploded-aar/leap-app-platform.deps/actionbarsherlock/unspecified/classes.jar"

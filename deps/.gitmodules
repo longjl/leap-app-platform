@@ -7,3 +7,6 @@
 [submodule "PopupMenuCompatLibrary"]
 	path = PopupMenuCompatLibrary
 	url = https://github.com/longjl/PopupMenuCompatLibrary.git
+[submodule "PullToRefreshLibrary"]
+	path = PullToRefreshLibrary
+	url = https://github.com/longjl/PullToRefreshLibrary.git

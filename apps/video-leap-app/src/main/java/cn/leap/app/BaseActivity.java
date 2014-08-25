@@ -4,12 +4,17 @@ package cn.leap.app;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 import cn.leap.app.fragments.LeftMenuFragment;
+import cn.leap.app.network.RequestManager;
 
 public class BaseActivity extends SlidingFragmentActivity {
 
@@ -57,5 +62,17 @@ public class BaseActivity extends SlidingFragmentActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+    protected Response.ErrorListener errorListener() {
+        return new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(BaseActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        };
     }
 }

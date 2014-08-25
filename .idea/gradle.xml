@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/apps/video-leap-app" />
             <option value="$PROJECT_DIR$/deps" />
             <option value="$PROJECT_DIR$/deps/PopupMenuCompatLibrary" />
+            <option value="$PROJECT_DIR$/deps/PullToRefreshLibrary" />
             <option value="$PROJECT_DIR$/deps/SlidingMenuLibrary" />
             <option value="$PROJECT_DIR$/deps/actionbarsherlock" />
           </set>

@@ -32,6 +32,12 @@ dependencies {
     compile(
             project(':deps:SlidingMenuLibrary'),
             project(':deps:actionbarsherlock'),
-            project(':deps:PopupMenuCompatLibrary')
+            project(':deps:PopupMenuCompatLibrary'),
+            project(':deps:PullToRefreshLibrary')
     )
+
+    //图片加载类库
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.2'
+    //网络请求类库
+    compile 'com.mcxiaoke.volley:library:1.0.6'
 }

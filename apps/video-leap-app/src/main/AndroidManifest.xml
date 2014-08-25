@@ -2,11 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.leap.app">
 
+    <uses-sdk
+        android:maxSdkVersion="11"
+        android:targetSdkVersion="17" />
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:logo="@drawable/logo"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
+        android:logo="@drawable/logo"
+        android:name=".LeapApplication"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
@@ -19,5 +23,8 @@
         </activity>
     </application>
 
-    <uses-sdk android:maxSdkVersion="11" android:targetSdkVersion="17"/>
+    <!-- Include following permission if you load images from Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Include following permission if you want to allow UIL to cache images on SD card -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>

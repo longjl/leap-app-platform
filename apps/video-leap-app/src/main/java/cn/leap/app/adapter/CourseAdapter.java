@@ -1,6 +1,7 @@
 package cn.leap.app.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,59 +9,44 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import cn.leap.app.R;
 import cn.leap.app.bean.Courses;
+import cn.leap.app.network.RequestManager;
 
 /**
+ * 课程数据适配器
  * Created by longjianlin on 14-8-21.
- * V 1.0
- * *********************************
- * Desc:
- * *********************************
  */
 public class CourseAdapter extends BaseAdapter {
+    private static final String TAG = CourseAdapter.class.getSimpleName();
     private Context mContent;
     private LayoutInflater inflater;
-    private List<Courses> mList;//课程列表
-
-    public CourseAdapter() {
-    }
+    private LinkedList<Courses> mListCourse;//课程列表
+    private ImageLoader imageLoader;
 
 
-    //测试数据
-    public Courses courses;
-
-    public CourseAdapter(Context context, List<Courses> list) {
+    public CourseAdapter(Context context, LinkedList<Courses> courseses) {
         mContent = context;
         inflater = LayoutInflater.from(mContent);
-        // mList = list;
-
-        mList = new ArrayList<Courses>();
-        for (int i = 0; i < 10; i++) {
-            courses = new Courses();
-            courses.id = i + 20;
-            courses.title = "吉他教学" + i;
-            courses.desc = "一流的吉他教学，leap首发出品.";
-            courses.thumb = "hello";
-            courses.channel_name = "音乐";
-            courses.update_at = "2014-08-09";
-            courses.update_info = "更新至第5集";
-            courses.video_total = 30;
-            mList.add(courses);
-        }
+        mListCourse = courseses;
+        imageLoader = RequestManager.getImageLoader();
     }
 
     @Override
     public int getCount() {
-        return mList.size();
+        return mListCourse.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mList.get(position);
+        return mListCourse.get(position);
     }
 
     @Override
@@ -70,7 +56,7 @@ public class CourseAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        final ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.home_item, null);
@@ -85,12 +71,24 @@ public class CourseAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Courses c = mList.get(position);
-
+        Courses c = mListCourse.get(position);
         holder.tv_title.setText(c.title);
         holder.tv_desc.setText(c.desc);
         holder.tv_update_info.setText(c.update_info);
+        imageLoader.get(c.thumb, new ImageLoader.ImageListener() {
+            @Override
+            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                if (response != null) {
+                    holder.iv_thumb.setImageBitmap(response.getBitmap());
+                }
+            }
 
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Image Load Error: " + error.getMessage());
+                holder.iv_thumb.setImageResource(R.drawable.home_03);//图片加载失败 , 赋给一张默认的图片
+            }
+        });
         return convertView;
     }
 

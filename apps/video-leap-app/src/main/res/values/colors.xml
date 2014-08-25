@@ -12,6 +12,7 @@
 
     <!-- home colors -->
     <color name="home_new_hot_bgcolor">#7cb42c</color>
+    <color name="lv_color">#ffe2e2e2</color>
     <color name="grey50">#7f7f7f</color>
     <color name="grey69">#b0b0b0</color>
     <color name="gainsboro">#dcdcdc</color>
