@@ -18,4 +18,14 @@
     <color name="gainsboro">#dcdcdc</color>
     <color name="text_color">#000</color>
     <color name="divider_color">#ccc</color>
+    <color name="text_color_1">#fe9403</color>
+    <color name="text_color_2">#666</color>
+
+
+    <!-- seekbar color -->
+    <color name="default_screen_bg">#20324a</color>
+    <color name="rounded_container_bg">#80000000</color>
+    <color name="rounded_container_border">#3b3f44</color>
+    <color name="light_gray_header_color">#646663</color>
+
 </resources>

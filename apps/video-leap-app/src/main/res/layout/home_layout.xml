@@ -15,22 +15,24 @@
         <cn.leap.app.widget.viewflow.ViewFlow
             android:id="@+id/viewflow"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:sidebuffer="3"></cn.leap.app.widget.viewflow.ViewFlow>
+            android:layout_height="match_parent">
+        </cn.leap.app.widget.viewflow.ViewFlow>
 
         <cn.leap.app.widget.viewflow.CircleFlowIndicator
             android:id="@+id/viewflowindic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:padding="20dip"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="10dp"
+            android:paddingRight="5dp"
+
             app:activeColor="@color/home_new_hot_bgcolor"
-            app:fadeOut="3000"
+            app:activeType="fill"
+            app:circleSeparation="15dip"
             app:inactiveColor="@color/white"
             app:inactiveType="fill"
-            app:radius="4dp"
-            app:spacing="8dp" />
+            app:radius="4dp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -40,6 +42,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="45dp">
 
@@ -55,15 +58,16 @@
                 android:textSize="@dimen/size_19" />
         </RelativeLayout>
 
-        <LinearLayout
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gainsboro" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gainsboro" />
+            android:background="@color/white"
+            android:orientation="vertical">
 
             <com.handmark.pulltorefresh.library.PullToRefreshListView
                 android:id="@+id/pull_refresh_list"
@@ -76,8 +80,16 @@
                 android:fastScrollEnabled="false"
                 android:footerDividersEnabled="false"
                 android:headerDividersEnabled="false"
-                android:smoothScrollbar="true" />
+                android:smoothScrollbar="true"
+                app:ptrMode="both" />
 
-        </LinearLayout>
+            <ProgressBar
+                android:id="@+id/pro_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:indeterminateDrawable="@drawable/progress_small"
+                android:visibility="visible" />
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

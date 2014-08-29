@@ -36,6 +36,7 @@ dependencies {
             project(':deps:PullToRefreshLibrary')
     )
 
+    compile 'com.android.support:support-v4:20.0.+'
     //图片加载类库
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.2'
     //网络请求类库

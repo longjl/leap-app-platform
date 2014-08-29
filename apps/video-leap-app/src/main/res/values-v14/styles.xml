@@ -3,8 +3,8 @@
     <!-- v14 styles -->
     <style name="BaseTheme" parent="Theme.Sherlock.Light.DarkActionBar">
         <!-- actionbar 箭头图标 -->
-        <!--<item name="homeAsUpIndicator">@drawable/ic_launcher</item>-->
-        <!--<item name="android:homeAsUpIndicator">@drawable/ic_launcher</item>-->
+        <item name="homeAsUpIndicator">@drawable/ce</item>
+        <item name="android:homeAsUpIndicator">@drawable/ce</item>
 
         <!-- actionbar 高度 -->
         <!--<item name="actionBarSize">50dip</item>-->

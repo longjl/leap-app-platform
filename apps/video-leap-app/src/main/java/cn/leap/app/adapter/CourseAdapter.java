@@ -1,6 +1,7 @@
 package cn.leap.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +9,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import cn.leap.app.R;
 import cn.leap.app.bean.Courses;
@@ -26,27 +26,27 @@ import cn.leap.app.network.RequestManager;
  */
 public class CourseAdapter extends BaseAdapter {
     private static final String TAG = CourseAdapter.class.getSimpleName();
-    private Context mContent;
+    private Context mContext;
     private LayoutInflater inflater;
-    private LinkedList<Courses> mListCourse;//课程列表
+    private LinkedList<Courses> mHomeList;//课程列表
     private ImageLoader imageLoader;
 
 
-    public CourseAdapter(Context context, LinkedList<Courses> courseses) {
-        mContent = context;
-        inflater = LayoutInflater.from(mContent);
-        mListCourse = courseses;
+    public CourseAdapter(Context context, LinkedList<Courses> homeList) {
+        mContext = context;
+        inflater = LayoutInflater.from(mContext);
+        mHomeList = homeList;
         imageLoader = RequestManager.getImageLoader();
     }
 
     @Override
     public int getCount() {
-        return mListCourse.size();
+        return mHomeList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mListCourse.get(position);
+        return mHomeList.get(position);
     }
 
     @Override
@@ -71,10 +71,11 @@ public class CourseAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Courses c = mListCourse.get(position);
-        holder.tv_title.setText(c.title);
-        holder.tv_desc.setText(c.desc);
-        holder.tv_update_info.setText(c.update_info);
+        Courses c = mHomeList.get(position);
+        holder.tv_title.setText(c.title != null && c.title.length() > 12 ? c.title.substring(0, 12) + "..." : c.title);
+        holder.tv_desc.setText(c.desc != null && c.desc.length() > 30 ? c.desc.substring(0, 30) + "..." : c.desc);
+        holder.tv_update_info.setText("更新至第" + c.video_total + "集");
+
         imageLoader.get(c.thumb, new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
@@ -91,6 +92,8 @@ public class CourseAdapter extends BaseAdapter {
         });
         return convertView;
     }
+
+
 
 
     class ViewHolder {

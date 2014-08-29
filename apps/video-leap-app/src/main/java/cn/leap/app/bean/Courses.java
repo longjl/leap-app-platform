@@ -13,8 +13,8 @@ public class Courses {
     public String desc;//描述
     public int video_total;//课程下的视频数
     public String thumb;//缩略图
+    public String teacher_name;//老师名字
+    public String intro;//老师介绍
     public String update_info;//更新消息(更新到32集)
-    public String channel_name;//所属频道
     public String update_at;//更新时间
-
 }
