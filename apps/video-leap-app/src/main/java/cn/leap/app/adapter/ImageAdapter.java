@@ -111,7 +111,7 @@ public class ImageAdapter extends BaseAdapter {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(mContext, CoursesActivity.class);
-            intent.putExtra(Constants.COURSE_ID_KEY, course_id);
+            intent.putExtra(Constants.INTENT_COURSE_ID_KEY, String.valueOf(course_id));//课程编号
             mContext.startActivity(intent);
         }
     }

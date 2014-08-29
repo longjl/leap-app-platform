@@ -1,8 +1,6 @@
 package cn.leap.app.common;
 
 
-import java.net.PortUnreachableException;
-
 /**
  * Created by longjianlin on 14-8-24.
  */
@@ -13,12 +11,13 @@ public class Constants {
     //json tags (Tag used to cancel the request)
     public static final String TAG_JSON_LIST_HOME_PAGE_COURSE = "json_list_home_page_course";
     public static final String TAG_JSON_HOT_COURSE = "json_hot_course";
+    public static final String TAG_JSON_ONE_COURSE = "json_one_course";
 
 
     //urls
     public static final String LIST_HOT_COURSE_URL = BASE_HTTP + "/course/mobilecourses/listHotCourse"; //推荐课程列表
     public static final String LIST_HOME_PAGE_COURSES_URL = BASE_HTTP + "/course/mobilecourses/listHomePageCourse";//首页课程信息列表
-
+    public static final String LIST_ONE_COURSE_URL = BASE_HTTP + "/course/mobilecourses/listOneCourse";//根据课程编号查询课程和老师信息
 
     //params
     public static final long COURSE_ID_PARAM = 0;           //默认课程编号
@@ -41,10 +40,10 @@ public class Constants {
     public static final String MSG_VALUE = "Success";
 
     public static final String DATA_KEY = "data";
-    public static final String RECODERS_KEY="recoders";
+    public static final String RECODERS_KEY = "recoders";
 
     //intent keys
-    public static final String COURSE_ID_KEY = "course_id";
+    public static final String INTENT_COURSE_ID_KEY = "course_id";
 
 
     //test urls

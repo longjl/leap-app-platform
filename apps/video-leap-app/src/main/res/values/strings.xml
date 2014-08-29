@@ -29,6 +29,7 @@
     <string name="update_at">更新时间 :</string>
     <string name="lecturer_desc">讲师简介</string>
     <string name="desc">课程简介</string>
+    <string name="not_found_course">该课程不存在</string>
 
     <!-- video player -->
     <string name="sd">标清</string>

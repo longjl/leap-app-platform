@@ -297,7 +297,7 @@ public class HomeFragment extends Fragment implements
 
         Courses courses = (Courses) adapter.getItem(position - 1);
         Intent intent = new Intent(mContext, CoursesActivity.class);
-        intent.putExtra(Constants.COURSE_ID_KEY, courses.id);
+        intent.putExtra(Constants.INTENT_COURSE_ID_KEY, String.valueOf(courses.id));//课程编号
         startActivity(intent);
     }
 

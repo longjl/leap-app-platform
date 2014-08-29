@@ -7,4 +7,5 @@ import java.text.SimpleDateFormat;
  */
 public class DateUtil {
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss");
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
 }
