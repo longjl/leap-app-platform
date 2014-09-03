@@ -19,14 +19,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.LinkedList;
 
@@ -36,18 +39,20 @@ import cn.leap.app.bean.Courses;
 import cn.leap.app.common.Constants;
 import cn.leap.app.network.RequestManager;
 
-public class ImageAdapter extends BaseAdapter {
+public class ImageAdapter extends BaseAdapter implements View.OnTouchListener {
     private static final String TAG = ImageAdapter.class.getSimpleName();
     private LayoutInflater mInflater;
     private Context mContext;
     private LinkedList<Courses> mHotList;
     private ImageLoader imageLoader;
+    private SlidingMenu mSlidingMenu;
 
-    public ImageAdapter(Context context, LinkedList<Courses> hotList) {
+    public ImageAdapter(Context context, LinkedList<Courses> hotList, SlidingMenu slidingMenu) {
         mContext = context;
         mHotList = hotList;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = RequestManager.getImageLoader();
+        mSlidingMenu = slidingMenu;
     }
 
     @Override
@@ -95,11 +100,19 @@ public class ImageAdapter extends BaseAdapter {
             }
         });
 
+
         holder.tv_title.setText(courses.title);
         holder.iv_thumb.setOnClickListener(new ThumbOnClickListener(courses.id));
+        holder.iv_thumb.setOnTouchListener(this);
+
         return convertView;
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        mSlidingMenu.setSlidingEnabled(false);
+        return false;
+    }
 
     class ThumbOnClickListener implements View.OnClickListener {
         private long course_id; //课程编号
@@ -120,6 +133,4 @@ public class ImageAdapter extends BaseAdapter {
         public ImageView iv_thumb; //缩略图
         public TextView tv_title;  //课程标题
     }
-
-
 }

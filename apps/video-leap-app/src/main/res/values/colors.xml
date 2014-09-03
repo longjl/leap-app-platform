@@ -2,7 +2,7 @@
 <resources>
     <!-- actionbar background color -->
     <color name="actionbar_background_color">#2c2a2b</color>
-
+    <color name="transparent">#00000000</color>
 
     <color name="background_tab_pressed">#6633B5E5</color>
     <color name="MediumSpringGreen">#00FA9A</color>
@@ -28,4 +28,7 @@
     <color name="rounded_container_border">#3b3f44</color>
     <color name="light_gray_header_color">#646663</color>
 
+
+    <!-- video player color -->
+    <color name="seekbar_color">#84E21C</color>
 </resources>

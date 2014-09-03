@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sd"
+        android:showAsAction="always"
+        android:title="@string/sd" />
+    <item
+        android:id="@+id/hd"
+        android:showAsAction="always"
+        android:title="@string/hd"></item>
+</menu>

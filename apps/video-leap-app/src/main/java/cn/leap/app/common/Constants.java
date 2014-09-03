@@ -12,12 +12,14 @@ public class Constants {
     public static final String TAG_JSON_LIST_HOME_PAGE_COURSE = "json_list_home_page_course";
     public static final String TAG_JSON_HOT_COURSE = "json_hot_course";
     public static final String TAG_JSON_ONE_COURSE = "json_one_course";
+    public static final String TAG_JSON_VIDEOS = "json_videos";
 
 
     //urls
     public static final String LIST_HOT_COURSE_URL = BASE_HTTP + "/course/mobilecourses/listHotCourse"; //推荐课程列表
     public static final String LIST_HOME_PAGE_COURSES_URL = BASE_HTTP + "/course/mobilecourses/listHomePageCourse";//首页课程信息列表
     public static final String LIST_ONE_COURSE_URL = BASE_HTTP + "/course/mobilecourses/listOneCourse";//根据课程编号查询课程和老师信息
+    public static final String LIST_VIDEOS_URL = BASE_HTTP + "/course/mobilecourses/listVideos";//根据课程编号查询视频列表
 
     //params
     public static final long COURSE_ID_PARAM = 0;           //默认课程编号
@@ -26,7 +28,7 @@ public class Constants {
     public static final String UP_PARAM = "up";             //上推
 
 
-    //course keys
+    //course and videos keys
     public static final String ID_KEY = "id";
     public static final String TITLE_KEY = "title";
     public static final String DESC_KEY = "desc";
@@ -35,6 +37,10 @@ public class Constants {
     public static final String VIDEO_TOTAL_KEY = "video_total";
     public static final String UPDATE_AT_KEY = "update_at";
     public static final String INTRO_KEY = "intro";
+    public static final String SD_KEY = "480Pflv";//视频播放路径 480P
+    public static final String HD_KEY = "720Pflv";//720P
+    public static final String DURATION_KEY = "duration";//视频时长
+
 
     public static final String MSG_KEY = "msg";
     public static final String MSG_VALUE = "Success";

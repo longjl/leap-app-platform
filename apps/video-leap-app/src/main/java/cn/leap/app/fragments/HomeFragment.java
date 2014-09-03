@@ -27,6 +27,7 @@ import org.json.JSONObject;
 
 import java.util.LinkedList;
 
+import cn.leap.app.MainActivity;
 import cn.leap.app.R;
 import cn.leap.app.activitys.CoursesActivity;
 import cn.leap.app.adapter.CourseAdapter;
@@ -42,7 +43,8 @@ import cn.leap.app.widget.viewflow.ViewFlow;
  */
 public class HomeFragment extends Fragment implements
         PullToRefreshBase.OnRefreshListener2<ListView>,
-        PullToRefreshBase.OnLastItemVisibleListener, AdapterView.OnItemClickListener {
+        PullToRefreshBase.OnLastItemVisibleListener,
+        AdapterView.OnItemClickListener, MainActivity.IHomeRefresh{
     private static final String TAG = HomeFragment.class.getSimpleName();
 
     private ViewFlow viewFlow;                              //滑动组件
@@ -59,8 +61,8 @@ public class HomeFragment extends Fragment implements
     private SlidingMenu mSlidingmenu;                       //SlidingMenu
     private ProgressBar pro_bar;                            //加载
 
-    private LinkedList<Courses> mHomeList;                 //列表数据
-    private LinkedList<Courses> mHotList;                  //课程推荐列表(轮播数据)
+    private LinkedList<Courses> mHomeList;                  //列表数据
+    private LinkedList<Courses> mHotList;                   //课程推荐列表(轮播数据)
 
     /**
      * 构造方法
@@ -113,6 +115,9 @@ public class HomeFragment extends Fragment implements
             mHotList = new LinkedList<Courses>();
         }
 
+        mHomeList.clear();
+        mHotList.clear();
+
         showProgressBar();//进度条
         getListHotCourse(); //推荐数据
         getListHomePageCourse(Constants.COURSE_ID_PARAM, Constants.NUM_PARAM, Constants.DOWN_PARAM); //课程列表
@@ -146,7 +151,8 @@ public class HomeFragment extends Fragment implements
     private void getListHomePageCourse(final long id, final int num, final String gesture) {
         String url = Constants.LIST_HOME_PAGE_COURSES_URL + "?id=" + id + "&num=" + num + "&gesture=" + gesture;
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url, null,
+                url,
+                null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -242,7 +248,7 @@ public class HomeFragment extends Fragment implements
                             mHotList.add(c);
                         }
 
-                        imageAdapter = new ImageAdapter(mContext, mHotList);
+                        imageAdapter = new ImageAdapter(mContext, mHotList, mSlidingmenu);
                         viewFlow.setAdapter(imageAdapter);//0 表示从索引0开始（第一个开始）
                         viewFlow.setmSideBuffer(mHotList.size());
                         viewFlow.startAutoFlowTimer();
@@ -314,5 +320,15 @@ public class HomeFragment extends Fragment implements
     private void hideProgressBar() {
         if (pro_bar != null) pro_bar.setVisibility(View.GONE);
     }
+
+
+    /**
+     * 刷新首页
+     */
+    @Override
+    public void refresh() {
+        initData();
+    }
+
 
 }

@@ -74,7 +74,7 @@ public class CourseAdapter extends BaseAdapter {
         Courses c = mHomeList.get(position);
         holder.tv_title.setText(c.title != null && c.title.length() > 10 ? c.title.substring(0, 10) + "..." : c.title);
         holder.tv_desc.setText(c.desc != null && c.desc.length() > 30 ? c.desc.substring(0, 30) + "..." : c.desc);
-        holder.tv_update_info.setText("更新至第" + c.video_total + "集");
+        holder.tv_update_info.setText(c.video_total + "集");
 
         imageLoader.get(c.thumb, new ImageLoader.ImageListener() {
             @Override

@@ -11,23 +11,49 @@
         android:layout_weight="3">
 
         <RelativeLayout
+            android:background="@drawable/video_loading_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <!-- 视频输出 SurfaceView -->
             <SurfaceView
                 android:id="@+id/surfaceview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
+            <!-- 视频加载 -->
+            <RelativeLayout
+                android:id="@+id/rl_loading"
+                android:background="@drawable/video_loading_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_title"
+                    android:layout_centerInParent="true"
+                    android:indeterminateDrawable="@drawable/progress_small"
+                    android:visibility="visible" />
+            </RelativeLayout>
             <ProgressBar
                 android:id="@+id/pro_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:indeterminateDrawable="@drawable/progress_small"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
 
+        <!-- 视频控制条 -->
         <LinearLayout
             android:id="@+id/ll_tools"
             android:layout_width="match_parent"
@@ -36,7 +62,7 @@
             android:background="@drawable/play_bg"
             android:gravity="left|center"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ImageButton
                 android:id="@+id/ib_play"
@@ -51,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="00:00"
+                android:text="@string/current_time"
                 android:textColor="#fff"
                 android:textSize="13sp" />
 
@@ -61,24 +87,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dip"
                 android:layout_weight="15"
-                />
+                android:maxHeight="1dp"
+                android:minHeight="1dp"
+                android:progressDrawable="@drawable/progressbar" />
 
             <TextView
                 android:id="@+id/tv_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="00:00"
+                android:text="@string/current_time"
                 android:textColor="#fff"
                 android:textSize="13sp" />
 
             <Button
                 android:id="@+id/btn_horsepower"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="25dp"
+                android:background="@drawable/horsepower_bg"
                 android:text="@string/sd"
                 android:textColor="@android:color/white"
+                android:textSize="12sp"
                 android:visibility="gone" />
 
             <ImageButton
@@ -97,5 +126,15 @@
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:background="@android:color/white"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/lv_videos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:choiceMode="singleChoice"
+            android:divider="@color/lv_color"
+            android:dividerHeight="1dp"></ListView>
+    </LinearLayout>
 </LinearLayout>

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/default_ptr_rotate"
+        android:showAsAction="always"
+        android:title="@string/refresh" />
     <item
         android:id="@+id/more"
         android:icon="@drawable/menu_more"

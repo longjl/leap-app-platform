@@ -33,4 +33,7 @@
 
     <!-- video player -->
     <string name="sd">标清</string>
+    <string name="hd">高清</string>
+    <string name="no_data">没有数据</string>
+    <string name="current_time">00:00</string>
 </resources>

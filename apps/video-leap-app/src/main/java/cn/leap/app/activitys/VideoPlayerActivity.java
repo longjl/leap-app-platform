@@ -14,20 +14,37 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.mcxiaoke.popupmenu.PopupMenuCompat;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.leap.app.BaseActivity;
 import cn.leap.app.R;
+import cn.leap.app.adapter.VideoAdapter;
+import cn.leap.app.bean.Videos;
+import cn.leap.app.common.Constants;
+import cn.leap.app.network.RequestManager;
 import cn.leap.app.util.DateUtil;
 
 /**
@@ -37,14 +54,18 @@ import cn.leap.app.util.DateUtil;
 public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.Callback,
         MediaPlayer.OnPreparedListener, SeekBar.OnSeekBarChangeListener,
         View.OnClickListener, MediaPlayer.OnCompletionListener,
-        MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener {
+        MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener
+        , MediaPlayer.OnBufferingUpdateListener, AdapterView.OnItemClickListener {
     private static final String TAG = "VideoPlayerActivity";
-    private String videoUrl = "http://daily3gp.com/vids/family_guy_penis_car.3gp";//视频播放地址
+    //private String videoUrl = "http://daily3gp.com/vids/family_guy_penis_car.3gp";//视频播放地址
     //private String videoUrl = "/sdcard/MIUI/Gallery/DemoVideo/XiaomiPhone.mp4";//视频播放地址
     //private String videoUrl = "http://video.leap.cn/20140810/86046d9b6fe0f9788112e02972457072.mp4";
     //private String videoUrl = "/sdcard/DCIM/Camera/20140819_173958.mp4";//视频播放地址
+    private String videoUrl = "http://video.leap.cn/20140812/7dfced334689b427610ace78a958fb18_0.f4v";
 
-    private ProgressBar pro_bar;            //加载
+    private RelativeLayout rl_loading;      //视频加载
+    private ProgressBar pro_bar;            //缓冲加载
+
     private SurfaceView surfaceview;        //SurfaceView 视频画面输出
     private SeekBar seekBar;                //视频播放进度条
     private TextView tv_current_time;       //播放当前时间
@@ -55,11 +76,21 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
     private LinearLayout ll_content;        //内容容器
     private MediaPlayer mediaPlayer;        //MediaPlayer 播放器视频
     private Button btn_horsepower;          //马力
+    private TextView tv_title;              //视频标题
+
+    private ListView lv_videos;             //视频列表 listview
 
     private int currentPosition = 0;        //当前播放位置
     private int duration = 0;               //视频总时长
     private boolean isPlaying;              //是否正在播放视频
     private boolean isFullScreen = false;   //是否全屏
+
+    private int videoWidth;                 //视频宽度
+    private int videoHeight;                //视频高度
+    private int videoPosition;              //当前播放视频的位置
+    private int mHorsePowerStatus;           //马力播放状态  0:标清 , 1:高清
+
+    private String course_id;               //课程编号
 
 
     public VideoPlayerActivity() {
@@ -69,13 +100,22 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSlidingMenu().setSlidingEnabled(false);//静止滑动
+        getSupportActionBar().hide();
+
         setContentView(R.layout.player_layout);
 
+        lv_videos = (ListView) findViewById(R.id.lv_videos);
+
+        rl_loading = (RelativeLayout) findViewById(R.id.rl_loading);
         pro_bar = (ProgressBar) findViewById(R.id.pro_bar);
+
         surfaceview = (SurfaceView) findViewById(R.id.surfaceview);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
         tv_current_time = (TextView) findViewById(R.id.tv_currenttime);
         tv_duration = (TextView) findViewById(R.id.tv_duration);
+        tv_title = (TextView) findViewById(R.id.tv_title);
         ib_play = (ImageButton) findViewById(R.id.ib_play);
         ll_tools = (LinearLayout) findViewById(R.id.ll_tools);
         ib_fullscreen = (ImageButton) findViewById(R.id.ib_fullscreen);
@@ -89,8 +129,11 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
         seekBar.setOnSeekBarChangeListener(this);//进度条监听事件
         ib_fullscreen.setOnClickListener(this);//全屏点击事件
         surfaceview.setOnClickListener(this);//点击事件
+        btn_horsepower.setOnClickListener(this);//马力
 
-        getSlidingMenu().setSlidingEnabled(false);//静止滑动
+        lv_videos.setOnItemClickListener(this);
+
+        initData();
     }
 
 
@@ -101,24 +144,17 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Log.i(TAG, "*************************** surfaceCreated(SurfaceHolder holder)");
-        // 设置播放的视频源
-        try {
-            mediaPlayer = new MediaPlayer();
-            //设置边播放变缓冲
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlayer.setDataSource(videoUrl);
-            // 设置显示视频的SurfaceHolder
-            mediaPlayer.setDisplay(surfaceview.getHolder());
-            mediaPlayer.prepareAsync();//开始装载
-            mediaPlayer.setOnPreparedListener(this);
-            mediaPlayer.setOnCompletionListener(this);
-            mediaPlayer.setOnErrorListener(this);
-            mediaPlayer.setOnInfoListener(this);
-            mediaPlayer.setOnBufferingUpdateListener(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
+        mediaPlayer = new MediaPlayer();
+        //设置边播放变缓冲
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        // 设置显示视频的SurfaceHolder
+        mediaPlayer.setDisplay(surfaceview.getHolder());
+        mediaPlayer.setOnPreparedListener(this);
+        mediaPlayer.setOnCompletionListener(this);
+        mediaPlayer.setOnErrorListener(this);
+        mediaPlayer.setOnInfoListener(this);
+        mediaPlayer.setOnBufferingUpdateListener(this);
     }
 
     @Override
@@ -135,7 +171,35 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
             mediaPlayer.stop();
         }
     }
-    /** ********************视频播放器 SurfaceView Callback 回调函数 start**************************** */
+
+    /**
+     * *******************视频播放器 SurfaceView Callback 回调函数 end****************************
+     */
+
+
+    private void play(String videoUrl, int horsePowerStatus) {
+        Log.i(TAG, "**********************  play(String videoUrl) , 调用开始播放方法.");
+        try {
+            surfaceview.setClickable(false);
+            showVideoLoading();
+            hideTools();
+            pro_bar.setVisibility(View.GONE);
+
+            mHorsePowerStatus = horsePowerStatus;//马力
+            if (mHorsePowerStatus == 0) {
+                btn_horsepower.setText(R.string.sd);
+            } else if (mHorsePowerStatus == 1) {
+                btn_horsepower.setText(R.string.hd);
+            }
+
+            mediaPlayer.reset();
+            mediaPlayer.setDataSource(videoUrl);
+            mediaPlayer.prepareAsync();//开始装载
+        } catch (IOException e) {
+            Log.i(TAG, "********************** " + e.getMessage());
+            //e.printStackTrace();
+        }
+    }
 
 
     /**
@@ -146,46 +210,63 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
     @Override
     public void onPrepared(MediaPlayer mp) {
         Log.i(TAG, "********************** onPrepared(MediaPlayer mp) , 装载完成开始播放视频.");
+        videoWidth = mediaPlayer.getVideoWidth();
+        videoHeight = mediaPlayer.getVideoHeight();
 
-        hideProgressBar();//隐藏加载组件
-        showTools();//显示工具栏
-
-        mediaPlayer.start();
-        mediaPlayer.seekTo(currentPosition); //按照初始位置播放
-        currentPosition = 0;
-
-        duration = mediaPlayer.getDuration();//获取视频总时长
-        tv_duration.setText(String.valueOf(DateUtil.dateFormat.format(duration)));
-        seekBar.setMax(duration);// 设置进度条的最大进度为视频流的最大播放时长
-
-        //开始线程，更新进度条的刻度
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    isPlaying = true;
-                    while (isPlaying) {
-                        int current = mediaPlayer.getCurrentPosition();
-                        handler.sendEmptyMessage(0);
-                       // seekBar.setProgress(current);
-                        sleep(500);
-                    }
-                } catch (Exception e) {
-                    Log.e("SeekBar setProgress error", e.getMessage());
-                }
-            }
-        }.start();
+        if (videoWidth > 0 && videoHeight > 0) {
+            handler.sendEmptyMessage(1);
+        } else {
+            Toast.makeText(VideoPlayerActivity.this, "视频不能播放", Toast.LENGTH_SHORT).show();
+        }
     }
 
-
+    /**
+     * @param msg
+     */
     private Handler handler = new Handler() {
-        /**
-         * 更新播放时间
-         * @param msg
-         */
         @Override
         public void handleMessage(Message msg) {
-            tv_current_time.setText(String.valueOf(DateUtil.dateFormat.format(mediaPlayer.getCurrentPosition())));
+            switch (msg.what) {
+                case 0:  //更新当前播放时间
+                    if (mediaPlayer != null && mediaPlayer.isPlaying())
+                        tv_current_time.setText(String.valueOf(DateUtil.dateFormat.format(mediaPlayer.getCurrentPosition())));
+                    break;
+                case 1:
+                    hideVideoLoading();
+                    surfaceview.setClickable(true);
+                    mediaPlayer.start();
+                    mediaPlayer.seekTo(currentPosition); //按照初始位置播放
+                    currentPosition = 0;
+                    duration = mediaPlayer.getDuration();//获取视频总时长
+                    tv_duration.setText(String.valueOf(DateUtil.dateFormat.format(duration)));
+                    seekBar.setMax(duration);// 设置进度条的最大进度为视频流的最大播放时长
+
+                    //开始线程，更新进度条的刻度
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                isPlaying = true;
+                                while (isPlaying) {
+                                    int current = mediaPlayer.getCurrentPosition();
+                                    handler.sendEmptyMessage(0);
+                                    seekBar.setProgress(current);
+                                    sleep(500);
+                                }
+                            } catch (Exception e) {
+                                Log.e("SeekBar setProgress error", e.getMessage());
+                            }
+                        }
+                    }.start();
+                    break;
+                case 2:
+                    if (videosList != null && videosList.size() > 0) {
+                        play(videosList.get(videoPosition).sd, 0);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         ;
@@ -257,6 +338,8 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
             } else if (ll_tools.getVisibility() == View.VISIBLE) {//显示
                 hideTools();
             }
+        } else if (v.getId() == btn_horsepower.getId()) {//马力
+            showPopupMenu(btn_horsepower);
         }
     }
 
@@ -280,7 +363,7 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy()");
+        Log.i(TAG, "****************************onDestroy()");
         if (mediaPlayer != null)
             mediaPlayer.release();
     }
@@ -291,20 +374,32 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
     @Override
     public void onCompletion(MediaPlayer mp) {
         currentPosition = 0;
+
+        if ((videoPosition + 1) < videosList.size()) {
+            videoPosition += 1;
+
+            videoAdapter.setSelectItem(videoPosition);
+            videoAdapter.notifyDataSetInvalidated();
+
+            handler.sendEmptyMessage(2);
+        }
     }
 
     /**
      * 显示ProgressBar
      */
-    private void showProgressBar() {
-        if (pro_bar != null) pro_bar.setVisibility(View.VISIBLE);
+    private void showVideoLoading() {
+        if (videosList != null && videosList.size() > 0) {
+            tv_title.setText(videosList.get(videoPosition).title);
+        }
+        rl_loading.setVisibility(View.VISIBLE);
     }
 
     /**
      * 隐藏ProgressBar
      */
-    private void hideProgressBar() {
-        if (pro_bar != null) pro_bar.setVisibility(View.GONE);
+    private void hideVideoLoading() {
+        if (rl_loading != null) rl_loading.setVisibility(View.GONE);
     }
 
 
@@ -350,7 +445,7 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
                 isFullScreen = false;
                 ll_content.setVisibility(View.VISIBLE);
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
-                getSupportActionBar().show();
+                //getSupportActionBar().show();
                 horsepowerVisibility(false);//隐藏马力
             } else {//返回上一级菜单
                 isPlaying = false;
@@ -367,11 +462,18 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
      */
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
-        Log.i(TAG, "*******************视频不能播放:  onError(MediaPlayer mp, int percent)");
-        Toast.makeText(VideoPlayerActivity.this, "视频不能播放", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "*******************视频不能播放: onError(MediaPlayer mp, int what, int extra)");
+        Log.i(TAG, "*******************videoPosition:" + videoPosition);
+
+        //Toast.makeText(VideoPlayerActivity.this, "视频不能播放", Toast.LENGTH_SHORT).show();
         isPlaying = false;
-        mediaPlayer.release();//释放资源
-        onBackPressed();
+        play(videosList.get(videoPosition).sd, 0);
+
+        videoAdapter.setSelectItem(videoPosition);
+        videoAdapter.notifyDataSetInvalidated();
+
+        //mediaPlayer.release();//释放资源
+        //onBackPressed();
         return false;
     }
 
@@ -382,11 +484,13 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
     @Override
     public boolean onInfo(MediaPlayer mp, int what, int extra) {
         switch (what) {
-            case MediaPlayer.MEDIA_INFO_BUFFERING_START: //开始缓冲
-                showProgressBar();
+            case MediaPlayer.MEDIA_INFO_BUFFERING_START: //缓冲开始
+                Log.i(TAG, "*******************onInfo()  缓冲开始");
+                pro_bar.setVisibility(View.VISIBLE);
                 break;
-            case MediaPlayer.MEDIA_INFO_BUFFERING_END: //缓冲完成
-                hideProgressBar();
+            case MediaPlayer.MEDIA_INFO_BUFFERING_END: //缓冲结束
+                Log.i(TAG, "*******************onInfo()  缓冲结束");
+                pro_bar.setVisibility(View.GONE);
                 break;
         }
         return true;
@@ -410,5 +514,108 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
     }
 
 
+    private void initData() {
+        if (videosList == null || videosList.size() == 0) {
+            videosList = new ArrayList<Videos>();
+        }
+        videosList.clear();
 
+        course_id = getIntent().getStringExtra(Constants.INTENT_COURSE_ID_KEY);
+        getListVideos(Long.valueOf(course_id));
+    }
+
+
+    /* ==========================================视频数据===========================================*/
+
+    private List<Videos> videosList;
+    private VideoAdapter videoAdapter;
+
+
+    private void getListVideos(long course_id) {
+        String url = Constants.LIST_VIDEOS_URL + "?course_id=" + course_id;
+        JsonObjectRequest jsonObj = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                String msg = response.optString(Constants.MSG_KEY);
+                if (!msg.equals(Constants.MSG_VALUE)) return;
+
+
+                JSONObject jsonObject = response.optJSONObject(Constants.DATA_KEY);
+                JSONArray jsonArray = jsonObject.optJSONArray(Constants.RECODERS_KEY);
+
+                if (jsonArray == null || jsonArray.length() == 0) {
+                    Toast.makeText(VideoPlayerActivity.this, R.string.no_data, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject videosJson = jsonArray.optJSONObject(i);
+                    Videos videos = new Videos();
+                    videos.id = videosJson.optLong(Constants.ID_KEY);
+                    videos.title = videosJson.optString(Constants.TITLE_KEY);
+                    videos.sd = videosJson.optString(Constants.SD_KEY);
+                    videos.hd = videosJson.optString(Constants.HD_KEY);
+                    videos.duration = videosJson.optString(Constants.DURATION_KEY);
+                    videosList.add(videos);
+                }
+
+                videoAdapter = new VideoAdapter(VideoPlayerActivity.this, videosList);
+                lv_videos.setAdapter(videoAdapter);
+
+                handler.sendEmptyMessage(2);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(VideoPlayerActivity.this, R.string.network_exception, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        );
+
+        RequestManager.addRequest(jsonObj, Constants.TAG_JSON_VIDEOS);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        videoAdapter.setSelectItem(position);
+        videoAdapter.notifyDataSetInvalidated();
+        if (videoPosition != position) {
+            Log.i(TAG, "*******************videoPosition:" + position);
+            mediaPlayer.reset();
+            videoPosition = position;
+            handler.sendEmptyMessage(2);
+        }
+    }
+
+    /* *********************视频马力切换*********************** */
+
+    /**
+     * show PopupMenu
+     *
+     * @param view
+     */
+    private void showPopupMenu(View view) {
+        final PopupMenuCompat.OnMenuItemClickListener onMenuItemClickListener =
+                new PopupMenuCompat.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(android.view.MenuItem item) {
+                        if (item.getItemId() == R.id.sd) {
+                            if (mHorsePowerStatus == 1) {
+                                play(videosList.get(videoPosition).sd, 0);
+                            }
+                        } else if (item.getItemId() == R.id.hd) {
+                            if (mHorsePowerStatus == 0) {
+                                play(videosList.get(videoPosition).hd, 1);
+                            }
+                        }
+                        return false;
+                    }
+                };
+        PopupMenuCompat popupMenu = new PopupMenuCompat(this, view);
+        popupMenu.setOnMenuItemClickListener(onMenuItemClickListener);
+        popupMenu.inflate(R.menu.horsepower);
+        popupMenu.show();
+    }
 }

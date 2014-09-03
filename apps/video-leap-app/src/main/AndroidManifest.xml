@@ -11,8 +11,7 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:logo="@drawable/logo"
-        android:theme="@style/AppTheme"
-        >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -26,11 +25,13 @@
 
         <activity
             android:name=".activitys.CoursesActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/ACTIVITY_THEME" />
         <activity
             android:name=".activitys.VideoPlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/ACTIVITY_THEME" />
     </application>
 
     <!-- Include following permission if you load images from Internet -->

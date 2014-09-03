@@ -6,6 +6,9 @@
         <item name="homeAsUpIndicator">@drawable/ce</item>
         <item name="android:homeAsUpIndicator">@drawable/ce</item>
 
+        <item name="windowAnimationStyle">@style/anim_activity</item>
+        <item name="android:windowAnimationStyle">@style/anim_activity</item>
+
         <!-- actionbar 高度 -->
         <!--<item name="actionBarSize">50dip</item>-->
         <!--<item name="android:actionBarSize">50dip</item>-->
@@ -13,8 +16,31 @@
         <item name="actionBarStyle">@style/myActionBar</item>
         <item name="android:actionBarStyle">@style/myActionBar</item>
     </style>
+
     <style name="myActionBar" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="background">@color/actionbar_background_color</item>
         <item name="android:background">@color/actionbar_background_color</item>
     </style>
+
+    <!-- activity 切换动画 -->
+    <style name="anim_activity" mce_bogus="1" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_close_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_close_exit</item>
+    </style>
+
+
+    <style name="ACTIVITY_THEME" parent="Theme.Sherlock.Light.DarkActionBar">
+        <item name="windowAnimationStyle">@style/anim_activity</item>
+        <item name="android:windowAnimationStyle">@style/anim_activity</item>
+
+        <!-- actionbar 高度 -->
+        <!--<item name="actionBarSize">50dip</item>-->
+        <!--<item name="android:actionBarSize">50dip</item>-->
+
+        <item name="actionBarStyle">@style/myActionBar</item>
+        <item name="android:actionBarStyle">@style/myActionBar</item>
+    </style>
+
 </resources>

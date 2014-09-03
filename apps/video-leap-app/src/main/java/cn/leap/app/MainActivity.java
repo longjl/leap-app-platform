@@ -22,6 +22,8 @@ public class MainActivity extends BaseActivity {
     private long waitTime = 2000;  //sign out wait time
     private long touchTime = 0;    //sign out touch time
 
+    private HomeFragment homeFragment;
+
     public MainActivity() {
         super(R.string.main_title);
     }
@@ -31,7 +33,9 @@ public class MainActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_frame);
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HomeFragment(this, getSlidingMenu())).commit();
+
+        homeFragment = new HomeFragment(this, getSlidingMenu());
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, homeFragment).commit();
 
         //open listener
         getSlidingMenu().setOnOpenListener(new SlidingMenu.OnOpenListener() {
@@ -67,6 +71,7 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -74,6 +79,8 @@ public class MainActivity extends BaseActivity {
             View view = findViewById(id);
             showPopupMenu(view);
             return true;
+        } else if (id == R.id.refresh) {
+            homeFragment.refresh();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -135,5 +142,12 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
+    /**
+     * 刷新接口
+     */
+    public interface IHomeRefresh {
+        public void refresh();//刷新首页
+    }
 
 }

@@ -51,6 +51,8 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
 
     private ImageButton ib_start_learn;         //开始学习
 
+    private String course_id;                   //课程编号
+
     public CoursesActivity() {
         super(R.string.main_title);
     }
@@ -79,7 +81,7 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
 
     private void initData() {
         imageLoader = RequestManager.getImageLoader();
-        String course_id = getIntent().getStringExtra(Constants.INTENT_COURSE_ID_KEY);
+        course_id = getIntent().getStringExtra(Constants.INTENT_COURSE_ID_KEY);
         getListOneCourse(course_id);
     }
 
@@ -167,6 +169,7 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         if (v.getId() == ib_start_learn.getId()) {//开始学习
             Intent intent = new Intent(CoursesActivity.this, VideoPlayerActivity.class);
+            intent.putExtra(Constants.INTENT_COURSE_ID_KEY, course_id);//课程编号
             startActivity(intent);
         }
     }

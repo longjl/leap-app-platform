@@ -342,15 +342,6 @@ public class ViewFlow extends AdapterView<Adapter> {
                 break;
 
             case MotionEvent.ACTION_MOVE:
-
-                /*
-                 *静止 SlidingMenu 手势滑动
-                 */
-                if (mSlidingMenu != null) {
-                    mSlidingMenu.setSlidingEnabled(false);
-                }
-
-
                 final int xDiff = (int) Math.abs(x - mLastMotionX);
 
                 boolean xMoved = xDiff > mTouchSlop;
@@ -383,16 +374,7 @@ public class ViewFlow extends AdapterView<Adapter> {
                 break;
 
             case MotionEvent.ACTION_UP:
-
-
                 if (mTouchState == TOUCH_STATE_SCROLLING) {
-
-                     /*
-                 *解除 SlidingMenu 手势滑动
-                 */
-                    if (mSlidingMenu != null) {
-                        mSlidingMenu.setSlidingEnabled(true);
-                    }
 
                     final VelocityTracker velocityTracker = mVelocityTracker;
                     velocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
@@ -475,6 +457,10 @@ public class ViewFlow extends AdapterView<Adapter> {
         final int delta = newX - getScrollX();
         mScroller.startScroll(getScrollX(), 0, delta, 0, Math.abs(delta) * 2);
         invalidate();
+
+        //允许SlidingMenu 滑动
+        if (mSlidingMenu != null)
+            mSlidingMenu.setSlidingEnabled(true);
     }
 
     @Override
