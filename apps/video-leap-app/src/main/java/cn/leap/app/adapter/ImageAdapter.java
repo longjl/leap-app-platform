@@ -31,10 +31,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
 import cn.leap.app.R;
 import cn.leap.app.activitys.CoursesActivity;
+import cn.leap.app.activitys.MainActivity;
 import cn.leap.app.bean.Courses;
 import cn.leap.app.common.Constants;
 import cn.leap.app.network.RequestManager;
@@ -47,12 +51,19 @@ public class ImageAdapter extends BaseAdapter implements View.OnTouchListener {
     private ImageLoader imageLoader;
     private SlidingMenu mSlidingMenu;
 
+    private Set<Integer> v;
+
     public ImageAdapter(Context context, LinkedList<Courses> hotList, SlidingMenu slidingMenu) {
         mContext = context;
         mHotList = hotList;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = RequestManager.getImageLoader();
         mSlidingMenu = slidingMenu;
+        v = new HashSet<Integer>();
+        v.add(0);
+        v.add(1);
+        v.add(2);
+        v.add(3);
     }
 
     @Override
@@ -84,7 +95,14 @@ public class ImageAdapter extends BaseAdapter implements View.OnTouchListener {
             holder = (ViewHolder) convertView.getTag();
         }
 
+
+        Log.e(TAG, "================position: " + position);
+        Log.e(TAG, "================position % mHotList.size(): " + position % mHotList.size());
+
         Courses courses = mHotList.get(position % mHotList.size());
+        Log.e(TAG, "================courses.title: " + courses.title);
+
+
         imageLoader.get(courses.thumb, new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
@@ -100,10 +118,10 @@ public class ImageAdapter extends BaseAdapter implements View.OnTouchListener {
             }
         });
 
-
         holder.tv_title.setText(courses.title);
         holder.iv_thumb.setOnClickListener(new ThumbOnClickListener(courses.id));
         holder.iv_thumb.setOnTouchListener(this);
+
 
         return convertView;
     }

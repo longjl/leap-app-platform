@@ -1,4 +1,4 @@
-package cn.leap.app;
+package cn.leap.app.activitys;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +11,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.mcxiaoke.popupmenu.PopupMenuCompat;
 
+import cn.leap.app.BuildConfig;
+import cn.leap.app.LeapApplication;
+import cn.leap.app.R;
 import cn.leap.app.fragments.HomeFragment;
 
 /**
@@ -75,11 +78,13 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.more) {
-            View view = findViewById(id);
-            showPopupMenu(view);
-            return true;
-        } else if (id == R.id.refresh) {
+//        if (id == R.id.more) {
+//            View view = findViewById(id);
+//            showPopupMenu(view);
+//            return true;
+//        } else
+//
+        if (id == R.id.refresh) {
             homeFragment.refresh();
         }
         return super.onOptionsItemSelected(item);

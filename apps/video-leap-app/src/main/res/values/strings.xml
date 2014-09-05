@@ -3,6 +3,12 @@
     <string name="app_name">力扑视频</string>
     <string name="main_title"></string>
 
+    <!-- login -->
+    <string name="plogin">请登录</string>
+    <string name="login">登 录</string>
+
+
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 

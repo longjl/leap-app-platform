@@ -89,7 +89,8 @@
                 android:layout_weight="15"
                 android:maxHeight="1dp"
                 android:minHeight="1dp"
-                android:progressDrawable="@drawable/progressbar" />
+                android:progressDrawable="@drawable/progressbar"
+                />
 
             <TextView
                 android:id="@+id/tv_duration"

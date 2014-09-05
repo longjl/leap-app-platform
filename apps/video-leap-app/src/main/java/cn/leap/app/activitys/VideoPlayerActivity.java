@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.leap.app.BaseActivity;
+import cn.leap.app.LeapApplication;
 import cn.leap.app.R;
 import cn.leap.app.adapter.VideoAdapter;
 import cn.leap.app.bean.Videos;
@@ -61,7 +61,7 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
     //private String videoUrl = "/sdcard/MIUI/Gallery/DemoVideo/XiaomiPhone.mp4";//视频播放地址
     //private String videoUrl = "http://video.leap.cn/20140810/86046d9b6fe0f9788112e02972457072.mp4";
     //private String videoUrl = "/sdcard/DCIM/Camera/20140819_173958.mp4";//视频播放地址
-    private String videoUrl = "http://video.leap.cn/20140812/7dfced334689b427610ace78a958fb18_0.f4v";
+    //private String videoUrl = "http://video.leap.cn/20140812/7dfced334689b427610ace78a958fb18_0.f4v";
 
     private RelativeLayout rl_loading;      //视频加载
     private ProgressBar pro_bar;            //缓冲加载
@@ -133,6 +133,8 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
 
         lv_videos.setOnItemClickListener(this);
 
+        //add activity
+        LeapApplication.getInstance().addActivity(this);
         initData();
     }
 
@@ -192,6 +194,13 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
                 btn_horsepower.setText(R.string.hd);
             }
 
+            if (videoUrl == null || videoUrl.length()==0){
+                Toast.makeText(VideoPlayerActivity.this, "视频地址不存在", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Log.i(TAG, "**********************videoUrl: " + videoUrl);
+
             mediaPlayer.reset();
             mediaPlayer.setDataSource(videoUrl);
             mediaPlayer.prepareAsync();//开始装载
@@ -231,7 +240,7 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
                     if (mediaPlayer != null && mediaPlayer.isPlaying())
                         tv_current_time.setText(String.valueOf(DateUtil.dateFormat.format(mediaPlayer.getCurrentPosition())));
                     break;
-                case 1:
+                case 1:  //视频播放
                     hideVideoLoading();
                     surfaceview.setClickable(true);
                     mediaPlayer.start();
@@ -240,6 +249,8 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
                     duration = mediaPlayer.getDuration();//获取视频总时长
                     tv_duration.setText(String.valueOf(DateUtil.dateFormat.format(duration)));
                     seekBar.setMax(duration);// 设置进度条的最大进度为视频流的最大播放时长
+
+                    Log.e(TAG, "**********************videoUrl : " + videosList.get(videoPosition).sd);
 
                     //开始线程，更新进度条的刻度
                     new Thread() {
@@ -292,6 +303,9 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
         // 取得当前进度条的刻度
         int progress = seekBar.getProgress();
         if (mediaPlayer != null) {
+            ib_play.setImageResource(R.drawable.ib_stop);
+            ib_play.setSelected(false);
+
             mediaPlayer.start();
             mediaPlayer.seekTo(progress); // 设置当前播放的位置
         }
@@ -510,6 +524,7 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceHolder.C
 
     @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
+       // Log.i(TAG, "*******************onBufferingUpdate()  缓冲更新 :" + percent);
         seekBar.setSecondaryProgress(percent);
     }
 

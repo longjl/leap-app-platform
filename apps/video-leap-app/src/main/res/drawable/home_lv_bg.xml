@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/lv_color" android:state_pressed="true"></item>
-    <item android:drawable="@color/white"></item>
+    <item android:drawable="@drawable/home_lv_pressed" android:state_pressed="true"></item>
+    <item android:drawable="@drawable/home_lv_default"></item>
 </selector>

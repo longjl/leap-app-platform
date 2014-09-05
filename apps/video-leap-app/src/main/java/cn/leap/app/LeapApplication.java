@@ -6,6 +6,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.leap.app.activitys.BaseActivity;
+import cn.leap.app.bean.Users;
 import cn.leap.app.network.RequestManager;
 
 /**
@@ -15,6 +17,8 @@ public class LeapApplication extends Application {
     private static final String TAG = LeapApplication.class.getSimpleName();
     private static List<BaseActivity> activityList;//activity list
     private static LeapApplication mApp; //creating a singleton
+    private Users users;
+
 
     @Override
     public void onCreate() {
@@ -27,6 +31,14 @@ public class LeapApplication extends Application {
 
     public static synchronized LeapApplication getInstance() {
         return mApp;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users u) {
+        this.users = u;
     }
 
 

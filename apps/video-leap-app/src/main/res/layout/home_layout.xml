@@ -12,27 +12,46 @@
         android:layout_weight="4"
         android:background="@color/abs__background_holo_dark">
 
-        <cn.leap.app.widget.viewflow.ViewFlow
-            android:id="@+id/viewflow"
+        <cn.leap.app.widget.viewflowpager.auto.AutoScrollViewPager
+            android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </cn.leap.app.widget.viewflow.ViewFlow>
+            android:layout_height="match_parent"></cn.leap.app.widget.viewflowpager.auto.AutoScrollViewPager>
 
-        <cn.leap.app.widget.viewflow.CircleFlowIndicator
-            android:id="@+id/viewflowindic"
-            android:layout_width="wrap_content"
+        <cn.leap.app.widget.viewflowpager.CirclePageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:paddingBottom="10dp"
-            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
 
-            app:activeColor="@color/home_new_hot_bgcolor"
-            app:activeType="fill"
-            app:circleSeparation="15dip"
-            app:inactiveColor="@color/white"
-            app:inactiveType="fill"
-            app:radius="4dp" />
+            app:fillColor="@color/home_new_hot_bgcolor"
+            app:pageColor="@color/white"
+            app:radius="4dip"
+            app:strokeWidth="0dip" />
+
+
+        <!--<cn.leap.app.widget.viewflow.ViewFlow-->
+        <!--android:id="@+id/viewflow"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+        <!--</cn.leap.app.widget.viewflow.ViewFlow>-->
+
+        <!--<cn.leap.app.widget.viewflow.CircleFlowIndicator-->
+        <!--android:id="@+id/viewflowindic"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:paddingBottom="10dp"-->
+        <!--android:paddingRight="5dp"-->
+
+        <!--app:activeColor="@color/home_new_hot_bgcolor"-->
+        <!--app:activeType="fill"-->
+        <!--app:circleSeparation="15dip"-->
+        <!--app:inactiveColor="@color/white"-->
+        <!--app:inactiveType="fill"-->
+        <!--app:radius="4dp" />-->
     </RelativeLayout>
 
     <LinearLayout
@@ -42,9 +61,9 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="45dp">
+            android:layout_height="45dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/home_courses"
@@ -69,13 +88,14 @@
             android:background="@color/white"
             android:orientation="vertical">
 
+            <!--android:dividerHeight="1dp"-->
+
+            <!--android:divider="@color/divider_color"-->
             <com.handmark.pulltorefresh.library.PullToRefreshListView
                 android:id="@+id/pull_refresh_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:cacheColorHint="#00000000"
-                android:divider="@color/divider_color"
-                android:dividerHeight="1dp"
                 android:fadingEdge="none"
                 android:fastScrollEnabled="false"
                 android:footerDividersEnabled="false"

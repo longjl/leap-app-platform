@@ -1,4 +1,4 @@
-package cn.leap.app;
+package cn.leap.app.activitys;
 
 
 import android.os.Bundle;
@@ -7,14 +7,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
+import cn.leap.app.R;
 import cn.leap.app.fragments.LeftMenuFragment;
-import cn.leap.app.network.RequestManager;
 
 public class BaseActivity extends SlidingFragmentActivity {
 

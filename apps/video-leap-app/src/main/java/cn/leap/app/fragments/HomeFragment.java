@@ -27,16 +27,16 @@ import org.json.JSONObject;
 
 import java.util.LinkedList;
 
-import cn.leap.app.MainActivity;
+import cn.leap.app.activitys.MainActivity;
 import cn.leap.app.R;
 import cn.leap.app.activitys.CoursesActivity;
 import cn.leap.app.adapter.CourseAdapter;
-import cn.leap.app.adapter.ImageAdapter;
+import cn.leap.app.adapter.ImagePagerAdapter;
 import cn.leap.app.bean.Courses;
 import cn.leap.app.common.Constants;
 import cn.leap.app.network.RequestManager;
-import cn.leap.app.widget.viewflow.CircleFlowIndicator;
-import cn.leap.app.widget.viewflow.ViewFlow;
+import cn.leap.app.widget.viewflowpager.CirclePageIndicator;
+import cn.leap.app.widget.viewflowpager.auto.AutoScrollViewPager;
 
 /**
  * Created by longjianlin on 14-8-21.
@@ -44,18 +44,17 @@ import cn.leap.app.widget.viewflow.ViewFlow;
 public class HomeFragment extends Fragment implements
         PullToRefreshBase.OnRefreshListener2<ListView>,
         PullToRefreshBase.OnLastItemVisibleListener,
-        AdapterView.OnItemClickListener, MainActivity.IHomeRefresh{
+        AdapterView.OnItemClickListener, MainActivity.IHomeRefresh {
     private static final String TAG = HomeFragment.class.getSimpleName();
 
-    private ViewFlow viewFlow;                              //滑动组件
-    private CircleFlowIndicator indic;                      //滑动点组件
+    private AutoScrollViewPager viewPager;
+    private CirclePageIndicator indicator;
 
     private PullToRefreshListView mPullRefreshListView;     //PullToRefreshListView 下拉刷新组件
     private ListView listView;                              //ListView
     private View homeView;                                  //homeView layout
 
     private CourseAdapter adapter;                          //CourseAdapter 课程数据适配器
-    private ImageAdapter imageAdapter;                      //ImageAdapter 图片轮播适配器
 
     private Context mContext;                               //Context
     private SlidingMenu mSlidingmenu;                       //SlidingMenu
@@ -79,9 +78,10 @@ public class HomeFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeView = inflater.inflate(R.layout.home_layout, null);
         pro_bar = (ProgressBar) homeView.findViewById(R.id.pro_bar);
-        viewFlow = (ViewFlow) homeView.findViewById(R.id.viewflow);
-        indic = (CircleFlowIndicator) homeView.findViewById(R.id.viewflowindic);
         mPullRefreshListView = (PullToRefreshListView) homeView.findViewById(R.id.pull_refresh_list);
+
+        viewPager = (AutoScrollViewPager) homeView.findViewById(R.id.view_pager);
+        indicator = (CirclePageIndicator) homeView.findViewById(R.id.indicator);
 
         return homeView;
     }
@@ -95,11 +95,6 @@ public class HomeFragment extends Fragment implements
         mPullRefreshListView.setOnItemClickListener(this);
 
         listView = mPullRefreshListView.getRefreshableView();
-
-        viewFlow.setFlowIndicator(indic);
-        viewFlow.setSlidingMenu(mSlidingmenu);
-        viewFlow.setTimeSpan(6000);
-        viewFlow.setSelection(3 * 1000);    //设置初始位置
 
         initData();
     }
@@ -127,7 +122,7 @@ public class HomeFragment extends Fragment implements
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        viewFlow.onConfigurationChanged(newConfig);
+        // viewFlow.onConfigurationChanged(newConfig);
     }
 
 
@@ -210,7 +205,6 @@ public class HomeFragment extends Fragment implements
                 Toast.makeText(mContext, R.string.network_exception, Toast.LENGTH_SHORT).show();
                 mPullRefreshListView.onRefreshComplete();
                 hideProgressBar();//隐藏加载进度条
-                //Log.d(TAG, "Error: " + error.getMessage());
             }
         });
         RequestManager.addRequest(jsonObjReq, Constants.TAG_JSON_LIST_HOME_PAGE_COURSE);
@@ -248,16 +242,19 @@ public class HomeFragment extends Fragment implements
                             mHotList.add(c);
                         }
 
-                        imageAdapter = new ImageAdapter(mContext, mHotList, mSlidingmenu);
-                        viewFlow.setAdapter(imageAdapter);//0 表示从索引0开始（第一个开始）
-                        viewFlow.setmSideBuffer(mHotList.size());
-                        viewFlow.startAutoFlowTimer();
+                        viewPager.setAdapter(new ImagePagerAdapter(mContext, mHotList, mSlidingmenu));
+                        indicator.setViewPager(viewPager);
+
+                        viewPager.setInterval(6000);
+                        viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
+                        viewPager.setSlidingMenu(mSlidingmenu);
+                        viewPager.startAutoScroll();
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Error: " + error.getMessage());
+                Log.i(TAG, "Error: " + error.getMessage());
                 // hide the progress dialog
                 Toast.makeText(mContext, R.string.network_exception, Toast.LENGTH_SHORT).show();
             }

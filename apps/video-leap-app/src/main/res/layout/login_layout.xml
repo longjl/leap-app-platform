@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/cn.leap.app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_new_hot_bgcolor"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+
+    <cn.leap.app.widget.ui.CircleImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/home_01"
+        app:border_color="@color/home_new_hot_bgcolor"
+        app:border_width="2dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp"
+        android:text="@string/plogin"
+        android:textColor="@color/white"
+        android:textSize="22sp" />
+
+
+    <EditText
+        android:id="@+id/et_email"
+        android:text="469893894@qq.com"
+        android:hint="Email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/uname_edittext_bg"
+        android:paddingLeft="30dp" />
+
+    <EditText
+        android:id="@+id/et_pwd"
+        android:text="saqima123456"
+        android:hint="密码"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/pwd_edittext_bg"
+        android:paddingLeft="30dp"
+        android:password="true" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_login_bg"
+        android:text="@string/login"
+        android:textColor="@color/home_new_hot_bgcolor"
+        android:textSize="18sp" />
+</LinearLayout>

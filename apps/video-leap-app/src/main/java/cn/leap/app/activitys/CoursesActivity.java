@@ -3,8 +3,6 @@ package cn.leap.app.activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -22,17 +20,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
-
-import cn.leap.app.BaseActivity;
+import cn.leap.app.LeapApplication;
 import cn.leap.app.R;
-import cn.leap.app.adapter.ImageAdapter;
 import cn.leap.app.bean.Courses;
 import cn.leap.app.common.Constants;
 import cn.leap.app.network.RequestManager;
-import cn.leap.app.util.DateUtil;
 
 /**
  * course info
@@ -75,6 +67,8 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
         ib_start_learn = (ImageButton) findViewById(R.id.ib_start_learn);
         ib_start_learn.setOnClickListener(this);
 
+        //add activity
+        LeapApplication.getInstance().addActivity(this);
         initData();
     }
 

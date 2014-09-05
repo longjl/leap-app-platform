@@ -6,10 +6,10 @@
         android:icon="@drawable/default_ptr_rotate"
         android:showAsAction="always"
         android:title="@string/refresh" />
-    <item
-        android:id="@+id/more"
-        android:icon="@drawable/menu_more"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/more"></item>
+    <!--<item-->
+        <!--android:id="@+id/more"-->
+        <!--android:icon="@drawable/menu_more"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:showAsAction="always"-->
+        <!--android:title="@string/more"></item>-->
 </menu>

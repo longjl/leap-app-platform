@@ -13,6 +13,7 @@ public class Constants {
     public static final String TAG_JSON_HOT_COURSE = "json_hot_course";
     public static final String TAG_JSON_ONE_COURSE = "json_one_course";
     public static final String TAG_JSON_VIDEOS = "json_videos";
+    public static final String TAG_JSON_LOGIN = "json_login";
 
 
     //urls
@@ -20,6 +21,8 @@ public class Constants {
     public static final String LIST_HOME_PAGE_COURSES_URL = BASE_HTTP + "/course/mobilecourses/listHomePageCourse";//首页课程信息列表
     public static final String LIST_ONE_COURSE_URL = BASE_HTTP + "/course/mobilecourses/listOneCourse";//根据课程编号查询课程和老师信息
     public static final String LIST_VIDEOS_URL = BASE_HTTP + "/course/mobilecourses/listVideos";//根据课程编号查询视频列表
+    public static final String LOGIN_URL = "http://api.leap.cn/user/login";//用户登录email=zhaopei@leap.cn&password=123456
+
 
     //params
     public static final long COURSE_ID_PARAM = 0;           //默认课程编号
@@ -42,8 +45,8 @@ public class Constants {
     public static final String DURATION_KEY = "duration";//视频时长
 
 
-    public static final String MSG_KEY = "msg";
-    public static final String MSG_VALUE = "Success";
+    public static final String MSG_KEY = "message";
+    public static final String MSG_VALUE = "success";
 
     public static final String DATA_KEY = "data";
     public static final String RECODERS_KEY = "recoders";
@@ -52,13 +55,14 @@ public class Constants {
     public static final String INTENT_COURSE_ID_KEY = "course_id";
 
 
-    //test urls
-    public static final String URL = "http://api.androidhive.info/volley/person_array.json";
+    //preferences key
+    public static final String LOGIN_PREFERENCES_KEY = "login_pref";
+    public static final String EMAIL_PREFERENCES_KEY = "email_pref";
+    public static final String PWD_PREFERENCES_KEY = "pwd_pref";
+    public static final String UID_PREFERENCES_KEY = "uid_pref";
+    public static final String NICKNAME_PREFERENCES_KEY = "nickname_pref";
 
 
-    //last update time
-    public static final String LAST_UPDATE_TIME_KEY = "last_update_time";
-    public static final String UPDATE_TIME_KEY = "update_time";
 }
 
 //private SharedPreferences sharedPreferences;
