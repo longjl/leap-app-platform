@@ -63,6 +63,12 @@ public class Constants {
     public static final String NICKNAME_PREFERENCES_KEY = "nickname_pref";
 
 
+    //cache key
+    public static final String CACHE_PREFERENCES_KEY = "cache_pref";
+    public static final String CACHE_HOT_COURSE_KEY = "cache_hot_course";                           //首页轮播图 缓存
+    public static final String CACHE_LIST_HOME_PAGE_COURSE = "cache_list_home_page_course";         //首页课程   缓存
+
+
 }
 
 //private SharedPreferences sharedPreferences;

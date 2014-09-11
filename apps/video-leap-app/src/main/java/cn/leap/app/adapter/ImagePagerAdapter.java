@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import cn.leap.app.R;
@@ -34,7 +35,7 @@ import cn.leap.app.widget.viewflowpager.salvage.RecyclingPagerAdapter;
  *
  * @author <a href="http://www.trinea.cn" target="_blank">Trinea</a> 2014-2-23
  */
-public class ImagePagerAdapter extends RecyclingPagerAdapter implements View.OnTouchListener{
+public class ImagePagerAdapter extends RecyclingPagerAdapter implements View.OnTouchListener {
     private static final String TAG = ImagePagerAdapter.class.getSimpleName();
     private Context context;
 
@@ -77,7 +78,7 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter implements View.OnT
             convertView = LayoutInflater.from(context).inflate(R.layout.image_item, null);
 
             holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-            holder.iv_thumb = (ImageView) convertView.findViewById(R.id.iv_thumb);
+            holder.iv_thumb = (NetworkImageView) convertView.findViewById(R.id.iv_thumb);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -86,28 +87,30 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter implements View.OnT
         Courses courses = mHotList.get(position);
         holder.tv_title.setText(courses.title);
 
+        holder.iv_thumb.setImageUrl(courses.thumb, imageLoader);
         holder.iv_thumb.setOnClickListener(new ThumbOnClickListener(courses.id));
         holder.iv_thumb.setOnTouchListener(this);
 
-        imageLoader.get(courses.thumb, new ImageLoader.ImageListener() {
-            @Override
-            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                if (response != null) {
-                    holder.iv_thumb.setImageBitmap(response.getBitmap());
-                }
-            }
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Image Load Error: " + error.getMessage());
-                holder.iv_thumb.setImageResource(R.drawable.home_03);//图片加载失败 , 赋给一张默认的图片
-            }
-        });
+//        imageLoader.get(courses.thumb, new ImageLoader.ImageListener() {
+//            @Override
+//            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+//                if (response != null) {
+//                    holder.iv_thumb.setImageBitmap(response.getBitmap());
+//                }
+//            }
+//
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.e(TAG, "Image Load Error: " + error.getMessage());
+//                holder.iv_thumb.setImageResource(R.drawable.home_03);//图片加载失败 , 赋给一张默认的图片
+//            }
+//        });
         return convertView;
     }
 
     class ViewHolder {
-        public ImageView iv_thumb; //缩略图
+        public NetworkImageView iv_thumb; //缩略图
         public TextView tv_title;  //课程标题
     }
 

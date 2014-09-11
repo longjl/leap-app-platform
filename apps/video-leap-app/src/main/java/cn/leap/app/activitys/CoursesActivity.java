@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,7 +35,7 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
     private static final String TAG = CoursesActivity.class.getSimpleName();
     private ImageLoader imageLoader;
 
-    private ImageView iv_thumb;                 //课程封面
+    private NetworkImageView iv_thumb;                 //课程封面
     private TextView tv_title;                  //课程标题
     private TextView tv_teacher_name;           //教师名字
     private TextView tv_update_at;              //更新时间
@@ -44,6 +45,8 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
     private ImageButton ib_start_learn;         //开始学习
 
     private String course_id;                   //课程编号
+
+    private LinearLayout ll_courses;            //布局
 
     public CoursesActivity() {
         super(R.string.main_title);
@@ -57,7 +60,7 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.course_layout);
         getSlidingMenu().setSlidingEnabled(false);//静止SlidingMenu滑动
 
-        iv_thumb = (ImageView) findViewById(R.id.iv_thumb);
+        iv_thumb = (NetworkImageView) findViewById(R.id.iv_thumb);
         tv_title = (TextView) findViewById(R.id.tv_title);
         tv_teacher_name = (TextView) findViewById(R.id.tv_teacher_name);
         tv_update_at = (TextView) findViewById(R.id.tv_update_at);
@@ -66,6 +69,8 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
 
         ib_start_learn = (ImageButton) findViewById(R.id.ib_start_learn);
         ib_start_learn.setOnClickListener(this);
+
+        ll_courses = (LinearLayout)findViewById(R.id.ll_courses);
 
         //add activity
         LeapApplication.getInstance().addActivity(this);
@@ -118,30 +123,16 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
                         tv_teacher_name.setText(c.teacher_name);
                         tv_update_at.setText(c.update_at);
                         tv_intro.setText(c.intro);
+                        iv_thumb.setImageUrl(c.thumb, imageLoader);
 
-                        imageLoader.get(c.thumb, new ImageLoader.ImageListener() {
-                            @Override
-                            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                                if (response != null) {
-                                    iv_thumb.setImageBitmap(response.getBitmap());
-                                }
-                            }
-
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e(TAG, "Image Load Error: " + error.getMessage());
-                                iv_thumb.setImageResource(R.drawable.home_03);//图片加载失败 , 赋给一张默认的图片
-                            }
-                        });
-
-
+                        ll_courses.setVisibility(View.VISIBLE);
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "Error: " + error.getMessage());
-                error.printStackTrace();
+                ll_courses.setVisibility(View.GONE);
                 Toast.makeText(CoursesActivity.this, R.string.network_exception, Toast.LENGTH_SHORT).show();
             }
         });

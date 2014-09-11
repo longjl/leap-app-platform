@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -33,12 +32,10 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Set;
 
 import cn.leap.app.R;
 import cn.leap.app.activitys.CoursesActivity;
-import cn.leap.app.activitys.MainActivity;
 import cn.leap.app.bean.Courses;
 import cn.leap.app.common.Constants;
 import cn.leap.app.network.RequestManager;

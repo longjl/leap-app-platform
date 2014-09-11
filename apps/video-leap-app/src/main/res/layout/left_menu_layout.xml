@@ -15,18 +15,19 @@
             android:layout_height="wrap_content">
 
             <cn.leap.app.widget.ui.CircleImageView
+                android:id="@+id/civ_thumb"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="20dp"
-                android:src="@drawable/home_01"
+                android:src="@drawable/user_default"
                 app:border_color="@color/home_new_hot_bgcolor"
                 app:border_width="2dp" />
 
             <TextView
+                android:id="@+id/tv_uname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="左侧菜单"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -37,6 +38,7 @@
             android:src="@drawable/line_bg" />
 
         <LinearLayout
+            android:id="@+id/ll_exit"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
@@ -54,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="退出"
+                android:text="@string/exit"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -84,7 +86,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
-            android:text="版本:1.0"
+            android:text="@string/version_code"
             android:textColor="@color/gainsboro" />
 
         <TextView
@@ -93,7 +95,7 @@
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingTop="5dp"
-            android:text="copyright 2014 leap.cn inc."
+            android:text="@string/copyright"
             android:textColor="@color/gainsboro" />
 
     </LinearLayout>

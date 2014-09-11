@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2011 Patrik Åkerfeldt
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2011 Patrik Åkerfeldt
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,26 +15,6 @@
 -->
 
 <resources>
-    <!--<declare-styleable name="ViewFlow">-->
-        <!--<attr name="sidebuffer" format="integer" />-->
-    <!--</declare-styleable>-->
-    <!--<declare-styleable name="CircleFlowIndicator">-->
-        <!--<attr name="activeColor" format="color" />-->
-        <!--<attr name="inactiveColor" format="color" />-->
-        <!--<attr name="radius" format="dimension" />-->
-        <!--<attr name="centered" format="boolean" />-->
-        <!--<attr name="fadeOut" format="integer" />-->
-        <!--<attr name="inactiveType">-->
-            <!--<flag name="stroke" value="0" />-->
-            <!--<flag name="fill" value="1" />-->
-        <!--</attr>-->
-        <!--<attr name="activeType">-->
-            <!--<flag name="stroke" value="0" />-->
-            <!--<flag name="fill" value="1" />-->
-        <!--</attr>-->
-        <!--<attr name="circleSeparation" format="dimension" />-->
-        <!--<attr name="activeRadius" format="dimension" />-->
-    <!--</declare-styleable>-->
 
     <!-- ************************************************************************* -->
     <!-- imageview 圆圈图片 -->

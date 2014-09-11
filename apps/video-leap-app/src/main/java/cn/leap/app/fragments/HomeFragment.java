@@ -63,6 +63,10 @@ public class HomeFragment extends Fragment implements
     private LinkedList<Courses> mHomeList;                  //列表数据
     private LinkedList<Courses> mHotList;                   //课程推荐列表(轮播数据)
 
+
+    //private SharedPreferences sharedPreferences;
+    //private SharedPreferences.Editor editor;
+
     /**
      * 构造方法
      *
@@ -72,6 +76,8 @@ public class HomeFragment extends Fragment implements
     public HomeFragment(Context context, SlidingMenu slidingMenu) {
         mContext = context;
         mSlidingmenu = slidingMenu;
+
+
     }
 
     @Override
@@ -96,6 +102,8 @@ public class HomeFragment extends Fragment implements
 
         listView = mPullRefreshListView.getRefreshableView();
 
+        //sharedPreferences = mContext.getSharedPreferences(Constants.CACHE_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        //editor = sharedPreferences.edit();//获取编辑器
         initData();
     }
 
@@ -113,9 +121,8 @@ public class HomeFragment extends Fragment implements
         mHomeList.clear();
         mHotList.clear();
 
-        showProgressBar();//进度条
-        getListHotCourse(); //推荐数据
-        getListHomePageCourse(Constants.COURSE_ID_PARAM, Constants.NUM_PARAM, Constants.DOWN_PARAM); //课程列表
+        getListHotCourse();
+        getListHomePageCourse(Constants.COURSE_ID_PARAM, Constants.NUM_PARAM, Constants.DOWN_PARAM);
     }
 
 
@@ -144,6 +151,8 @@ public class HomeFragment extends Fragment implements
      * @param gesture 手势(down:下拉 , up:上推)
      */
     private void getListHomePageCourse(final long id, final int num, final String gesture) {
+        showProgressBar();//进度条
+
         String url = Constants.LIST_HOME_PAGE_COURSES_URL + "?id=" + id + "&num=" + num + "&gesture=" + gesture;
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 url,
@@ -197,6 +206,7 @@ public class HomeFragment extends Fragment implements
                             adapter.notifyDataSetChanged();
                         }
 
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -209,6 +219,7 @@ public class HomeFragment extends Fragment implements
         });
         RequestManager.addRequest(jsonObjReq, Constants.TAG_JSON_LIST_HOME_PAGE_COURSE);
     }
+
 
     /**
      * 获取课程推荐信息(用于图片轮播)
@@ -226,6 +237,8 @@ public class HomeFragment extends Fragment implements
                         JSONObject jsonObject = response.optJSONObject(Constants.DATA_KEY);
                         JSONArray jsonArray = jsonObject.optJSONArray(Constants.RECODERS_KEY);
                         if (jsonArray == null || jsonArray.length() == 0) return;
+
+                        mHotList.clear();
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject courseJson = jsonArray.optJSONObject(i);
@@ -249,6 +262,7 @@ public class HomeFragment extends Fragment implements
                         viewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
                         viewPager.setSlidingMenu(mSlidingmenu);
                         viewPager.startAutoScroll();
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -324,8 +338,8 @@ public class HomeFragment extends Fragment implements
      */
     @Override
     public void refresh() {
-        initData();
+        getListHotCourse();
+        getListHomePageCourse(!mHomeList.isEmpty() ? mHomeList.getFirst().id : Constants.COURSE_ID_PARAM, Constants.NUM_PARAM, Constants.DOWN_PARAM);
     }
-
 
 }

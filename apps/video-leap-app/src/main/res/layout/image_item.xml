@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/iv_thumb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/home_03"></ImageView>
+        android:scaleType="fitXY">
+    </com.android.volley.toolbox.NetworkImageView>
 
     <TextView
         android:id="@+id/tv_title"

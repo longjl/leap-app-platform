@@ -6,8 +6,9 @@
     <!-- login -->
     <string name="plogin">请登录</string>
     <string name="login">登 录</string>
-
-
+    <string name="exit">退 出</string>
+    <string name="version_code">版本:1.0</string>
+    <string name="copyright">copyright 2014 leap.cn inc.</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
